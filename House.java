@@ -34,7 +34,15 @@ public class House extends Building {
  * @param resident
  */
 public void moveIn(String resident){
-residents.add(resident);
+  residents.add(resident);
+}
+/**
+ * 
+ * @param residents
+ * moves in an arraylist of residents
+ */
+public void moveIn(ArrayList<String> residents){
+  residents.addAll(residents);
 }
 /**
  * moves out a resident, returns resident
@@ -44,6 +52,11 @@ residents.add(resident);
 public String moveOut(String resident){
   residents.remove(resident);
   return resident;
+}
+
+public ArrayList<String> moveOut(ArrayList<String> residents){
+  residents.removeAll(residents);
+  return residents;
 }
 /**
  * checks if resident is in house, returns boolean
@@ -59,9 +72,30 @@ public boolean isResident(String resident){
   }
   return residents.contains(resident);
 }
+
+public void showOptions(){
+if (nFloors==1) {
+  System.out.println("Available options at " + this.name + ":\n + enter() \n + exit()");
+} else { if (getElevator()) {
+    super.showOptions();
+  } else {
+    System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown() \n");
+  }
+  System.out.println("+ getElevator()\n + getNResidents()\n + getResident()\n + moveIn(resident)\n + moveOut(resident)\n + isResident(resident)");
+}}
+public void goToFloor(int floorNum){
+if (getElevator()) {
+  super.goToFloor(floorNum);
+} else { 
+  throw new RuntimeException("This building does not have an elevator.");
+}
+}
+
+
   public static void main(String[] args) {
-    House h = new House("Morris House", "101 Green Street in NoHo", 4, false, false);
-    System.out.println(h);
+    House morris = new House("Morris House", "101 Green Street in NoHo", 4, false, false);
+    System.out.println(morris);
+    morris.showOptions();
   }
 
 }

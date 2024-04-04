@@ -1,4 +1,5 @@
 /* This is a stub for the Library class */
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 public class Library extends Building {
@@ -24,6 +25,13 @@ public class Library extends Building {
       collection.put(title, true);
       System.out.println("You have successfully added " + title + " to the collection!");
     }
+    public ArrayList<String> toAddToCollection;
+    public void addTitle(ArrayList<String> toAddToCollection, Hashtable<String, Boolean> collection){
+      for (String title : toAddToCollection){
+        collection.put(title, true);
+      }
+    }
+   
 /**
  * Checks out title
  * @param title
@@ -41,6 +49,7 @@ public class Library extends Building {
       }
       
     }
+    
 /**
  * Returns book to collection
  * @param title
@@ -74,6 +83,24 @@ public class Library extends Building {
 public boolean isAvailable(String title){
   return(collection.get(title));
 }
+
+/**
+ * 
+ * @return ArrayList<String> of available titles
+ */
+public ArrayList<String> isAvailable() {
+  ArrayList<String> availableTitles = new ArrayList<>();
+
+  for (String title : collection.keySet()) {
+      if (collection.get(title)) {
+          availableTitles.add(title);
+      }
+  }
+  System.out.println(availableTitles);
+  return availableTitles;
+}
+// Used chat gpt to help me do this one
+
 /**
  * prints collection
  */
@@ -85,7 +112,18 @@ public void printCollection(){
     // Used chat gpt to help me do this part with printing it. I did where it just said the title and true or false but thought this would be easier to read
   }
 }
+public void goToFloor(int floorNum){
+  if (getElevator()) {
+    super.goToFloor(floorNum);
+  } else { 
+    throw new RuntimeException("This building does not have an elevator.");
+  }
+  }
 
+public void showOptions() {
+  super.showOptions();
+  System.out.println("+ addTitle(title)\n + checkOut(title)\n + returnBook(title)\n + containsTitle(title)\n + isAvailable(title)\n + printCollection()");
+}
     public static void main(String[] args) {
       Hashtable<String,Boolean> collection = new Hashtable<>();
       Library lib = new Library("Neilson", "7 Neilson Drive, Northampton MA", 4, collection);
@@ -95,6 +133,8 @@ public void printCollection(){
       lib.checkOut("The Communist Manifesto");
       lib.returnBook("The Communist Manifesto");
       lib.printCollection();
+      lib.showOptions();
+      lib.isAvailable();
     }
   
   }
